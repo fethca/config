@@ -1,0 +1,34 @@
+name: Publish Package to npmjs
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      # Setup Node environment
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.9.0'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+      # Install dependencies with PNPM
+      - name: Install Dependencies
+        run: pnpm install
+      # Test the package with vitest
+      - name: Test
+        run: pnpm test
+      # Build the package with PNPM
+      - name: Build
+        run: pnpm run build
+      # Publish the package to npm with PNPM
+      - name: Publish
+        run: pnpm publish --access=public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
