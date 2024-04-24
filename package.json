@@ -1,0 +1,47 @@
+{
+  "name": "@fethcat/config",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "format": "prettier -w \"{src,tests}/**/*.ts\"",
+    "lint": "eslint \"{src,tests}/**/*.ts\"",
+    "test": "vitest run --coverage",
+    "version:patch": "fethca-version patch",
+    "version:minor": "fethca-version minor",
+    "version:major": "fethca-version major"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fethca/config.git"
+  },
+  "devDependencies": {
+    "@fethcat/eslint-plugin": "^0.0.3",
+    "@fethcat/prettier-config": "^1.0.5",
+    "@fethcat/tests": "^0.0.15",
+    "@fethcat/version": "^0.0.11",
+    "@types/node": "^20.12.2",
+    "mockdate": "^3.0.5",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "@vitest/coverage-v8": "^1.4.0",
+    "envalid": "^8.0.0",
+    "eslint": "^8.57.0",
+    "vitest": "^1.4.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:@fethcat/back"
+    ]
+  },
+  "prettier": "@fethcat/prettier-config"
+}
