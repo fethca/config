@@ -38,7 +38,7 @@ describe('getConfig', () => {
     expect(service['updateExpired']).toHaveBeenCalled()
   })
 
-  it('should fetch config if config is defined and not expired and force is true', async () => {
+  it('should fetch config if config is defined, not expired and force is true', async () => {
     const service = new MockService(0)
     service['config'] = 'toto'
     service['isExpired'] = vi.fn().mockReturnValue(false)
