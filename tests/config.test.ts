@@ -29,6 +29,15 @@ describe('getConfig', () => {
     expect(service.fetch).toHaveBeenCalled()
   })
 
+  it('should set autoRefresh config', async () => {
+    const service = new MockService(0, { autoRefresh: true })
+    service['config'] = 'toto'
+    service['autoRefresh'] = vi.fn()
+    service['isExpired'] = vi.fn().mockReturnValue(true)
+    await service.getConfig()
+    expect(service['autoRefresh']).toHaveBeenCalled()
+  })
+
   it('should update expiry time if config is expired', async () => {
     const service = new MockService(0)
     service['config'] = 'toto'
@@ -92,6 +101,24 @@ describe('getConfig', () => {
     const service = new MockService(0)
     const config = await service.getConfig()
     expect(config).toBe('titi')
+  })
+})
+
+describe('autoRefresh', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('should force getConfig after timeout', () => {
+    const service = new MockService(1000, { autoRefresh: true })
+    service.getConfig = vi.fn().mockResolvedValue('titi')
+    service['autoRefresh']()
+    vi.advanceTimersByTime(1000)
+    expect(service.getConfig).toHaveBeenCalledWith(true)
   })
 })
 

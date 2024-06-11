@@ -3,9 +3,15 @@ import { EventEmitter } from 'node:events'
 export abstract class ConfigService<T> extends EventEmitter {
   private config?: T
   private expiryTime = 0
+  private timeout: NodeJS.Timeout
 
-  constructor(private interval: number) {
+  constructor(
+    private interval: number,
+    private options?: { autoRefresh: boolean },
+  ) {
     super()
+    this.timeout = setTimeout(() => {}, 0)
+    clearTimeout(this.timeout)
   }
 
   abstract fetch(): Promise<T>
@@ -14,6 +20,7 @@ export abstract class ConfigService<T> extends EventEmitter {
     if (force || !this.config || this.isExpired()) {
       try {
         this.config = await this.fetch()
+        if (this.options?.autoRefresh) this.autoRefresh()
       } catch (error) {
         this.emit('fetch-error', error)
       }
@@ -25,6 +32,13 @@ export abstract class ConfigService<T> extends EventEmitter {
     }
 
     return this.config
+  }
+
+  private autoRefresh() {
+    if (this.timeout) clearTimeout(this.timeout)
+    this.timeout = setTimeout(async () => {
+      await this.getConfig(true)
+    }, this.interval)
   }
 
   private isExpired(): boolean {
