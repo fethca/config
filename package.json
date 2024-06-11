@@ -26,17 +26,17 @@
     "@fethcat/eslint-plugin": "^0.0.3",
     "@fethcat/prettier-config": "^1.0.5",
     "@fethcat/tests": "^0.0.15",
-    "@fethcat/version": "^0.0.11",
-    "@types/node": "^20.12.2",
+    "@fethcat/version": "^0.0.12",
+    "@types/node": "^20.14.2",
     "mockdate": "^3.0.5",
-    "prettier": "^3.2.5",
-    "typescript": "^5.4.3"
+    "prettier": "^3.3.2",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@vitest/coverage-v8": "^1.4.0",
+    "@vitest/coverage-v8": "^1.6.0",
     "envalid": "^8.0.0",
-    "eslint": "^8.57.0",
-    "vitest": "^1.4.0"
+    "eslint": "8.57.0",
+    "vitest": "^1.6.0"
   },
   "eslintConfig": {
     "extends": [
